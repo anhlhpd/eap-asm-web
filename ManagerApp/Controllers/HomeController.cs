@@ -33,6 +33,18 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult CreateAccount()
+        {
+            return View();
+        }
+        public IActionResult EditAccount()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

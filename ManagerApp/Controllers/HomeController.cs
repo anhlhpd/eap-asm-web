@@ -37,16 +37,16 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
-        public IActionResult CreateAccount()
+        public IActionResult Create()
         {
             return View();
         }
-        public IActionResult EditAccount()
+        public IActionResult Edit()
         {
             return View();
         }
 
-        public IActionResult ListAccount()
+        public IActionResult List()
         {
             return View();
         }

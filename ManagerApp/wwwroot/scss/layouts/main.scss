@@ -9,7 +9,6 @@
 }
 .form-input {
     width: 100%;
-    border: 1px solid rgb(235, 235, 235);
     @include border-radius(5px);
     padding: 17px 20px;
     box-sizing: border-box;
@@ -30,7 +29,6 @@
 		font-weight: 500;
     }
     &:focus {
-        border: 1px solid transparent;
         -webkit-border-image-source: 
             -webkit-linear-gradient(to right, rgb(159,172,230),  rgb(116,235,213)); 
         -moz-border-image-source:

@@ -37,20 +37,6 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
-        public IActionResult Create()
-        {
-            return View();
-        }
-        public IActionResult Edit()
-        {
-            return View();
-        }
-
-        public IActionResult List()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

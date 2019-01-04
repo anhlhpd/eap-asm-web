@@ -11,6 +11,11 @@
     td {
         padding: 10px;
     }
+    table {
+        background-color: white;
+        width: 100%;
+        border-radius: 2%;
+    }
 </style>
 <section class="content-header">
     <div class="limiter">
@@ -18,7 +23,7 @@
             <div class="wrap-table100">
                 <div class="table100 ver1">
                     <div class="#">
-                        <table >
+                        <table>
                             <thead>
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
@@ -32,59 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column7">New York City, NY</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column7">New York City, NY</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column7">New York City, NY</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column7">New York City, NY</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
+                                <tr class="row100 body tb-content">
                                     <td class="">Brandon Green</td>
                                     <td class="cell100 column2">CMO</td>
                                     <td class="cell100 column3">16 Nov 2012</td>
@@ -105,4 +58,40 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    var token = localStorage.getItem('token-key');
+    $.ajax({
+        method: 'GET',
+        url: 'https://eap-asm.azurewebsites.net/api/Accounts',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Basic ' + token
+        },
+        success: function (data, textStatus, jqXHR) {
+            var htmlContent = '';
+            for (var i = 0; i < data.length; i++) {
+                htmlContent += '<td class="">' + data[i].id+ '</td>';
+                htmlContent += '<td class="cell100 column2">' + data[i].username + '</td>';
+                htmlContent += '<td class="cell100 column3">' + data[i].generalInfomation.firstname + '</td>';
+                htmlContent += '<td class="cell100 column4">' + data[i].generalInfomation.lastname + '</td>';
+                htmlContent += '<td class="cell100 column5">' + data[i].generalInfomation.gender + '</td>';
+                htmlContent += '<td class="cell100 column6">' + data[i].generalInfomation.birthday + '</td>';
+                htmlContent += '<td class="cell100 column7">' + data[i].generalInfomation.email + '</td>';
+                htmlContent += '<td class="cell100 column8">';
+                htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                htmlContent += '</td>'
+            }
+            $('.tb-content').html(htmlContent);
+        },
+        error: function (jqXHR, exception) {
+            alert('Not okie');
+        }
+    });
+</script>
+
+
 

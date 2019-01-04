@@ -1,102 +1,81 @@
 ﻿@{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="content container-fluid">
-    <div class="container">
-        <h1>Edit Profile</h1>
-        <hr>
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-3">
-                <div class="text-center">
-                    <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                    <h6>Upload a different photo...</h6>
 
-                    <input type="file" class="form-control">
-                </div>
-            </div>
-
-            <!-- edit form column -->
-            <div class="col-md-9 personal-info">
-                <div class="alert alert-info alert-dismissable">
-                    <a class="panel-close close" data-dismiss="alert">×</a>
-                    <i class="fa fa-coffee"></i>
-                    This is an <strong>.alert</strong>. Use this to show important messages to the user.
-                </div>
-                <h3>Personal info</h3>
-
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">First name:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="Jane">
+<section class="content-header">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="edit-account-form" class="signup-form">
+                        <h2 class="form-title">Edit account</h2>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" name="username" id="username" placeholder="User Name" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Last name:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="Bishop">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" name="password" id="password" placeholder="Password" />
+                                <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Company:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="janesemail@gmail.com">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" name="firstname" id="firstname" placeholder="First Name" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Time Zone:</label>
-                        <div class="col-lg-8">
-                            <div class="ui-select">
-                                <select id="user_time_zone" class="form-control">
-                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                    <option value="Alaska">(GMT-09:00) Alaska</option>
-                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                    <option value="Arizona">(GMT-07:00) Arizona</option>
-                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" name="lastname" id="lastname" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="number" class="form-input" name="phone" id="phone" placeholder="Your Phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Gender</div>
+                                <select class="form-input" id="create-account-form-inputGroup">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Username:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="text" value="janeuser">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Birth Day</div>
+                                <input type="date" class="form-input" name="birthday" id="birthday" placeholder="Birth Day" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="password" value="11111122333">
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Confirm password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="password" value="11111122333">
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Save Edit" />
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-8">
-                            <input type="button" class="btn btn-primary" value="Save Changes">
-                            <span></span>
-                            <input type="reset" class="btn btn-default" value="Cancel">
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                        <p class="loginhere">
+                            Have already an account ? <a href="#" class="loginhere-link">Login here</a>
+                        </p>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
-    <hr>
 </section>

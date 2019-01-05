@@ -20,11 +20,6 @@ namespace ManagerApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -34,7 +29,6 @@ namespace ManagerApp
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
-            app.UseCors("AllowAll");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

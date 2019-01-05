@@ -16,7 +16,6 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
-
         public IActionResult ListAccount()
         {
             return View();

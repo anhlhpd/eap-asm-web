@@ -9,6 +9,7 @@
             <div class="container">
                 <div class="signup-content">
                     <form method="POST" id="edit-account-form" class="signup-form">
+                        <input type="hidden" id=""/>
                         <h2 class="form-title">Edit account</h2>
                         <div class="form-group">
                                 <input type="text" class="form-input" name="username" id="username" placeholder="User Name" />
@@ -18,13 +19,10 @@
                                 <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                                <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                                <input type="text" class="form-input" name="firstName" id="firstname" placeholder="First Name" />
                         </div>
                         <div class="form-group">
-                                <input type="text" class="form-input" name="firstname" id="firstname" placeholder="First Name" />
-                        </div>
-                        <div class="form-group">
-                                <input type="text" class="form-input" name="lastname" id="lastname" placeholder="Last Name" />
+                                <input type="text" class="form-input" name="lastName" id="lastname" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
                                 <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" />
@@ -34,16 +32,17 @@
                         </div>
                         <div class="form-group">
                                 <div for="inputGroupSelect01">Gender</div>
-                                <select class="form-input" id="create-account-form-inputGroup">
+                                <select class="form-input" id="create-account-form-inputGroup" name="gender">
                                     <option selected>Choose...</option>
                                     <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                    <option value="3">Other</option>
+                                    <option value="0">Female</option>
+                                    <option value="2">Other</option>
                                 </select>
                         </div>
                         <div class="form-group">
                                 <div for="inputGroupSelect01">Birth Day</div>
-                                <input type="date" class="form-input" name="birthday" id="birthday" placeholder="Birth Day" />
+                                <input type="datetime-local" class="form-input" name="birthday" id="birthday" 
+                                       placeholder="Birth Day"/>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
@@ -61,3 +60,88 @@
         </section>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    function getQueryParams() {
+        function identity(e) { return e; }
+        function toKeyValue(params, param) {
+            var keyValue = param.split('=');
+            var key = keyValue[0], value = keyValue[1];
+
+            params[key] = params[key] ? [value].concat(params[key]) : value;
+            return params;
+        }
+        return decodeURIComponent(window.location.search).
+            replace(/^\?/, '').split('&').
+            filter(identity).
+            reduce(toKeyValue, {});
+    }
+    $(document).ready(function(){
+        
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        console.log("Hello");
+        console.log(id);
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3'
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                $('input[name="username"]').val(data.username);
+                $('input[name="firstName"]').val(data.generalInformation.firstName);
+                $('input[name="lastName"]').val(data.generalInformation.lastName);
+                $('input[name="email"]').val(data.email);
+                $('input[name="phone"]').val(data.generalInformation.phone);
+                $('select[name="gender"]').val(data.generalInformation.gender);
+                $('input[name="birthday"]').val(data.generalInformation.birthday);
+                $('input[name="id"]').val(resp.item.id);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    });
+
+    $('#submit').click(function () {
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            method: 'PUT',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3'
+            },
+            data:
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].username + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.firstName + '</td>';
+                    htmlContent += '<td class="cell100 column4">' + data[i].generalInformation.lastName + '</td>';
+                    htmlContent += '<td class="cell100 column5">' + data[i].generalInformation.gender + '</td>';
+                    htmlContent += '<td class="cell100 column6">' + data[i].generalInformation.birthday + '</td>';
+                    htmlContent += '<td class="cell100 column7">' + data[i].email + '</td>';
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.tb-content').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    });
+</script>

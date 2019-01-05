@@ -29,7 +29,7 @@
                     <img src="images/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form">
+                <form method="POST" class="login100-form validate-form" >
                     <span class="login100-form-title">
                         Member Login
                     </span>
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="pass" placeholder="Password">
+                        <input class="input100" type="password" name="password" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -51,9 +51,7 @@
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" id="btnLogin">
-                            Login
-                        </button>
+                        <input class="login100-form-btn" id="btnLogin" placeholder="Login" type="button">
                     </div>
 
                     <div class="text-center p-t-12">
@@ -97,28 +95,30 @@
 
 
     <script>
-        $("#btnLogin").click(function () {
+        $('#btnLogin').click(function () {
             var username = $('input[name="username"]').val();
             var password = $('input[name="password"]').val();
+            var url = 'https://eap-asm.azurewebsites.net/api/Authentication/StaffLogin';
+            var data = {
+                'username': username,
+                'password': password,
+                'clientId': 'MNG'
+            }
             $.ajax({
                 method: 'POST',
-                url: 'https://eap-asm.azurewebsites.net/api/Authentication/StaffLogin',
+                url: url,
+                contentType: 'application/json',
                 header: {
                     'content-type': 'application/json'
                 },
-                data: {
-                    'username': username,
-                    'password': password,
-                    'clientId': 'MNG'
-                },
+                data: JSON.stringify(data),
                 success: function (resp) {
                     alert("success");
-                    alert(resp);
                     localStorage.setItem("token-key", resp);
                     //window.location.href = "/Manager/ListStudent";
                 },
                 error: function (jqXHR, exception) {
-                    alert("error");
+                    alert("error: ");
                     console.log(jqXHR);
                 }
             });

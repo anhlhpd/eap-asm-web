@@ -101,22 +101,35 @@
             success: function (data, textStatus, jqXHR) {
                 var htmlContent = '';
                 for (var i = 0; i < data.length; i++) {
+                    var date = data[i].startDate;
+                    date = formatDate(date);
                     htmlContent += '<tr class="row100 body">'
                     htmlContent += '<td class="">' + data[i].id + '</td>';
-                    htmlContent += '<td class="cell100 column2">' + data[i].generalInformation.startTime + '</td>';
-                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.session + '</td>';                    
+                    htmlContent += '<td class="cell100 column2">' + date + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].session + '</td>';                    
                     htmlContent += '<td class="cell100 column8">';
                     htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
-                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>&emsp;';
+                    htmlContent += '<a href="/Manager/DetailClass/' + data[i].id + '"><button><i class="fa fas fa-plus"></i>Create Marks</button></a>';
                     htmlContent += '</td>';
                     htmlContent += '</tr>';
                 }
-                $('.tb-content').html(htmlContent);
+                $('tbody').html(htmlContent);
+                console.log(htmlContent);
             },
             error: function (r, exception) {
                 alert('Not okie');
                 console.log(r);
             }
         });
+        function formatDate(startTime) {
+            var d = new Date(startTime),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+        }
     </script>
 </section>

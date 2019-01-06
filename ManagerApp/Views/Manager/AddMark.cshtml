@@ -1,11 +1,10 @@
-﻿@RenderBody()
-@{
+﻿@{
     ViewData["Title"] = "Add Mark";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
-    <div id="currentSubjectId">Create Marks for ViewData["clazzId"]</div>
-    <div class="limiter">
+    <div id="currentSubjectId"></div>
+    <div class="limiter">   
         <div class="container-table150">
             <div class="wrap-table100">
                 <div class="table100 ver1">
@@ -48,10 +47,14 @@
         crossorigin="anonymous">
 </script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
+        var token = localStorage.getItem('token-key');
+        var clazzId = getParamValue("clazzId");
+        var subjectId = getParamValue("subjectId");
+        $('#currentSubjectId').html("Create Marks for " + clazzId);
         $.ajax({
             method: 'GET',
-            url: 'https://eap-asm.azurewebsites.net/api/Accounts',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + clazzId + '/Students',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': 'Basic ' + token
@@ -62,9 +65,9 @@
                     htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
                     htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
                     htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
-                    htmlContent += '<th class="cell100 column3">' + data[i].generalInfomation.firstname + '</th>';
-                    htmlContent += '<th class="cell100 column4">' + data[i].generalInfomation.lastname + '</th>';            
-                    htmlContent += '<th class="cell100 column5">' + data[i].generalInfomation.gender + '</th>';
+                    htmlContent += '<th class="cell100 column3">' + data[i].generalInformation.firstName + '</th>';
+                    htmlContent += '<th class="cell100 column4">' + data[i].generalInformation.lastName + '</th>';            
+                    htmlContent += '<th class="cell100 column5">' + data[i].generalInformation.gender + '</th>';
                     htmlContent += '<th class="cell100 column6"><input type="number" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
                     htmlContent += '<th class="cell100 column7"><input type="number" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
                     htmlContent += '<th class="cell100 column8"><input type="number" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
@@ -89,48 +92,43 @@
             var theoryMark = 0;
             var practiceMark = 0;
             var assignmentMark = 0;
-            $(this).find('input[id="theory-' + value + '"]').first(function(){
-                $(this).on("blur",function(){
-                    if($(this).val().trim().length == 0){
-                        alert("Please input mark");
-                        $(this).focus();
-                    }
-                    theoryMark = $(this).val();
-                });
+
+            var theory = $(value).find("[id^=theory]");
+            theory.focusout(function () {
+                if ($(this).val().trim().length == 0) {
+                    alert("Please input mark");
+                }
+                theoryMark = $(this).val();
             });
-            $(this).find('input[id="practice-' + value + '"]').first(function(){
-                $(this).on("blur",function(){
-                    if($(this).val().trim().length == 0){
-                        alert("Please input mark");
-                        $(this).focus();
-                    }
-                    practiceMark = $(this).val();
-                });
+            var practice = $(value).find("[id^=practice]");
+            practice.focusout(function () {
+                if ($(this).val().trim().length == 0) {
+                    alert("Please input mark");
+                }
+                practice = $(this).val();
             });
-            $(this).find('input[id="assignment-' + value + '"]').first(function(){
-                $(this).on("blur",function(){
-                    if($(this).val().trim().length == 0){
-                        alert("Please input mark");
-                        $(this).focus();
-                    }
-                    assignmentMark = $(this).val();
-                });
+            var assignment = $(value).find("[id^=assignment]");
+            assignment.focusout(function () {
+                if ($(this).val().trim().length == 0) {
+                    alert("Please input mark");
+                }
+                assignment = $(this).val();
             });
             var totalMark = (theoryMark + practiceMark + assignmentMark)/(10 + 15 + 10);
             if(totalMark >= 4.0 && theoryMark >= 4.0 && practiceMark >= 4.0
             && assignmentMark >= 4.0){
                 isPass = "Pass";
             }
-            $(this).find('th[id="total-' + value + '"]').first().html() = totalMark;
-            $(this).find('th[id="status-' + value + '"]').first().html() = isPass;
+            $(this).find('th[id="total-' + value + '"]').first().html(totalMark);
+            $(this).find('th[id="status-' + value + '"]').first().html(isPass);
         });
     }
 
     $('#btnSubmitMarks').click(function () {
         var token = localStorage.getItem('token-key');
         var data = [];
-        $('input[type="number"]').each(function(){
-            var markType = $(this).attr('id').split('-').first();
+        $('input[type="number"]').each(function () {
+            var markType = $(this).attr('id').split('-').first;
             switch(markType){
                 case "theory": 
                     markType = 0;
@@ -155,7 +153,7 @@
         });
         $.ajax({
             method: 'POST',
-            url: 'https://eap-asm.azurewebsites.net/api/Marks', // sửa url sau khi có api
+            url: 'https://eap-asm.azurewebsites.net/api/Marks/Manager/ManagerGetMarks',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': 'Basic ' + token
@@ -170,4 +168,12 @@
             }
         });
     });
+    function getParamValue(param) {
+        var urlParamString = location.search.split(param + "=");
+        if (urlParamString.length <= 1) return "";
+        else {
+            var tmp = urlParamString[1].split("&");
+            return tmp[0];
+        }
+    }
 </script>

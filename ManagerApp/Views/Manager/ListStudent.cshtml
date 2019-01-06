@@ -12,28 +12,18 @@
         <div class="container-table150">
             <div class="wrap-table100">
                 <h2 class="form-title">List Student</h2>
+                <form action="#" method="get" class="sidebar-form" id="mysearch">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
                 <div class="table100 ver1">
                     <div class="#">
-                        <div class="col-md-3 center-block">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                        Username
-                                        <span class="fa fa-caret-down"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Student Id</a></li>
-                                        <li><a href="#">Email</a></li>
-                                        <li><a href="#">First Name</a></li>
-                                        <li><a href="#">Phone</a></li>
-                                    </ul>
-                                </div>
-                                <input type="text" class="form-control w-25" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-info btn-flat">Search</button>
-                                </span>
-                            </div>
-                        </div>
                         <table>
                             <thead>
                                 <tr class="row100 head">
@@ -114,4 +104,38 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    var token = localStorage.getItem('token-key');
+    $.ajax({
+        method: 'GET',
+        url: 'https://eap-asm.azurewebsites.net/api/Accounts',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Basic ' + token
+        },
+        success: function (data, textStatus, jqXHR) {
+            var htmlContent = '';
+            for (var i = 0; i < data.length; i++) {
+                htmlContent += '<td class="">' + data[i].id+ '</td>';
+                htmlContent += '<td class="cell100 column4">' + data[i].username + '</td>';
+                htmlContent += '<td class="cell100 column2">' + data[i].generalInfomation.firstname + '</td>';
+                htmlContent += '<td class="cell100 column3">' + data[i].generalInfomation.lastname + '</td>';            
+                htmlContent += '<td class="cell100 column5">' + data[i].generalInfomation.gender + '</td>';
+                htmlContent += '<td class="cell100 column6">' + data[i].generalInfomation.class + '</td>';             
+                htmlContent += '<td class="cell100 column8">';
+                htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                htmlContent += '</td>'
+            }
+            $('.tb-content').html(htmlContent);
+        },
+        error: function (jqXHR, exception) {
+            alert('Not okie');
+        }
+    });
+</script>
+
 </section>

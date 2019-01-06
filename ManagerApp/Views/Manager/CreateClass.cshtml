@@ -54,6 +54,7 @@
         crossorigin="anonymous"></script>
 <script>
     $("#btnSave").click(function () {
+    var token = localStorage.getItem('token-key');
         var data = {
             "id": $('input[name="id"]').val(),
             "startDate": $('input[name="startDate"]').val(),
@@ -65,7 +66,7 @@
             url: 'https://eap-asm.azurewebsites.net/api/Clazz',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3c'
+                'Authorization': 'Basic ' + token
             },
             data: JSON.stringify(data),
             success: function (data, textStatus, jqXHR) {

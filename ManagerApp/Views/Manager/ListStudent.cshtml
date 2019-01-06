@@ -68,7 +68,7 @@
                     htmlContent += '<td class="cell100 column5">' + data[i].generalInfomation.gender + '</td>';
                     htmlContent += '<td class="cell100 column6">' + data[i].generalInfomation.class + '</td>';
                     htmlContent += '<td class="cell100 column8">';
-                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<a href="/Manager/EditStudent/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
                     htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
                     htmlContent += '</td>'
                 }

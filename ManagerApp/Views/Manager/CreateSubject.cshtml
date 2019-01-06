@@ -48,6 +48,7 @@
         crossorigin="anonymous"></script>
 <script>
     $("#btnSave").click(function () {
+    var token = localStorage.getItem('token-key');
         var data = {
             "id": $('input[name="id"]').val(),
             "name": $('input[name="name"]').val(),
@@ -58,7 +59,7 @@
             url: 'https://eap-asm.azurewebsites.net/api/Subjects',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3c'
+                'Authorization': 'Basic ' + token
             },
             data: JSON.stringify(data),
             success: function (data, textStatus, jqXHR) {

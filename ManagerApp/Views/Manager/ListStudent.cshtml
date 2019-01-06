@@ -24,7 +24,7 @@
                 </form>
                 <div class="table100 ver1">
                     <div class="#">
-                        <table>
+                        <table style="background-color: white;">
                             <thead>
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
@@ -37,66 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody class="tb-content">
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -109,13 +50,13 @@
         crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        //var token = localStorage.getItem('token-key');
+        var token = localStorage.getItem('token-key');
         $.ajax({
             method: 'GET',
-            url: 'https://eap-asm.azurewebsites.net/api/Accounts',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts?RoleName=Student',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'o6asEHZz1kgr7hIjhYcHSLm46rMrzdw3'
+                'Authorization': 'Basic ' + token
             },
             success: function (data, textStatus, jqXHR) {
                 var htmlContent = '';
@@ -138,7 +79,5 @@
             }
         });
     });
-    
 </script>
-
 </section>

@@ -12,6 +12,14 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
+        public IActionResult AddMark()
+        {
+            return View();
+        }
+        public IActionResult DetailClass()
+        {
+            return View();
+        }
         public IActionResult ListStudent()
         {
             return View();

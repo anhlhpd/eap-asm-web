@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -24,19 +24,38 @@
     <!-- Main css -->
     <link rel="stylesheet" href="~/css/style.css">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"
+    <link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link href="~/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
     <!--===============================================================================================-->
+    <style>
+        .limiter {
+            background: #CCFFCC;
+        }
+        #mysearch {
+            width: 300px;
+            float: right;
+        }
+        th, tr, td {
+            text-align: center;
+        }
 
+        td {
+            padding: 10px;
+        }
+
+        body {
+            padding: 0;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -128,38 +147,38 @@
                 </form>
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
-                @Html.Partial("_MainMenu")
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            @RenderBody()
-            <!-- .content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- Default to the left -->
-        </footer>
-    </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery 3 -->
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <!-- Vendor JS-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
-    <!-- Main JS-->
-    <script src="js/global.js"></script>
+@Html.Partial("_MainMenu")
+<!-- /.sidebar-menu -->
+</section>
+<!-- /.sidebar -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+@RenderBody()
+<!-- .content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Main Footer -->
+<footer class="main-footer">
+    <!-- Default to the left -->
+</footer>
+</div>
+<!-- ./wrapper -->
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 3 -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/dist/js/adminlte.min.js"></script>
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/js/main.js"></script>
+<!-- Vendor JS-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<script src="~/vendor/datepicker/moment.min.js"></script>
+<script src="~/vendor/datepicker/daterangepicker.js"></script>
+<!-- Main JS-->
+<script src="~/js/global.js"></script>
 </body>
 </html>

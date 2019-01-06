@@ -8,16 +8,16 @@ namespace ManagerApp.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult Create()
+        public IActionResult CreateAccount()
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult EditAccount()
         {
             return View();
         }
 
-        public IActionResult List()
+        public IActionResult ListAccount()
         {
             return View();
         }

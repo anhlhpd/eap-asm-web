@@ -1,3 +1,5 @@
 ManagerApp/bin/*
 ManagerApp/obj/*
 .vs/*
+bin/*
+obj/*

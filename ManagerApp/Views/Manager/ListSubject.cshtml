@@ -25,7 +25,7 @@
                 </form>
                 <div class="table100 ver1">
                     <div class="#">
-                        <table>
+                        <table style="background-color: white;">
                             <thead>
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
@@ -35,57 +35,7 @@
                                     <th class="cell100 column8">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
+                            <tbody class="body">
                             </tbody>
                         </table>
                     </div>
@@ -94,3 +44,41 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Subjects',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'dQUruolz1kgKQIxwEZPuRabRX3oT5ea'
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                var htmlContent = '';
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].name + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].description + '</td>';
+                    htmlContent += '<td class="cell100 column4">' + data[i].status + '</td>';
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.body').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    });
+</script>

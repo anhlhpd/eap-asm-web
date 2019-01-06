@@ -11,33 +11,32 @@
     <div class="limiter">
         <div class="container-table150">
             <div class="wrap-table100">
-                <h2 class="form-title">List Class</h2>
+                <h2 class="form-title" style="align-content: center;    
+                                            padding-top: 20px;
+                                            padding-left: 20px;
+                                            text-transform: uppercase;">List Class</h2>
+                <form action="#" method="get" class="sidebar-form" id="mysearch">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
                 <div class="table100 ver1">
                     <div class="#">
-                        <div class="col-md-3 center-block">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                        Class Id
-                                        <span class="fa fa-caret-down"></span>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control w-25" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-info btn-flat">Search</button>
-                                </span>
-                            </div>
-                        </div>
-                        <table>
+                        <table style="background-color: white;">
                             <thead>
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
                                     <th class="cell100 column2">Start Time</th>
-                                    <th class="cell100 column3">session</th>
+                                    <th class="cell100 column3">Session</th>
                                     <th class="cell100 column8">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="body">
                                 <tr class="row100 body">
                                     <td class="">Brandon Green</td>
                                     <td class="cell100 column2">CMO</td>
@@ -90,4 +89,38 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script>
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3c'
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].startDate + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].session + '</td>';                    
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.body').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    </script>
 </section>

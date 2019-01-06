@@ -2,7 +2,12 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/js/admin.js"></script>
 <section class="content-header">
     <div class="main">
         <section class="signup">
@@ -14,36 +19,45 @@
                             <input type="text" class="form-input" name="username" id="username" placeholder="User Name" />
                         </div>
                         <div class="form-group">
-                                <input type="password" class="form-input" name="password" id="password" placeholder="Password" />
-                                <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            <input type="password" class="form-input" name="password" id="password" placeholder="Password" />
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                                <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                            <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
                         </div>
                         <div class="form-group">
-                                <input type="text" class="form-input" name="firstname" id="firstname" placeholder="First Name" />
+                            <input type="text" class="form-input" name="firstname" id="firstname" placeholder="First Name" />
                         </div>
                         <div class="form-group">
-                                <input type="text" class="form-input" name="lastname" id="lastname" placeholder="Last Name" />
+                            <input type="text" class="form-input" name="lastname" id="lastname" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
-                                <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" />
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" />
                         </div>
                         <div class="form-group">
-                                <input type="number" class="form-input" name="phone" id="phone" placeholder="Your Phone" />
+                            <input type="number" class="form-input" name="phone" id="phone" placeholder="Your Phone" />
                         </div>
                         <div class="form-group">
-                                <div for="inputGroupSelect01">Gender</div>
-                                <select class="form-input" id="create-account-form-inputGroup">
-                                    <option selected>Choose...</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                    <option value="3">Other</option>
-                                </select>
+                            <div for="gender">Gender</div>
+                            <select class="form-input" id="create-account-form-inputGroup" name="gender">
+                                <option selected>Choose...</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Other</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                                <div for="inputGroupSelect01">Birth Day</div>
-                                <input type="date" class="form-input" name="birthday" id="birthday" placeholder="Birth Day" />
+                            <div for="birthday">Birth Day</div>
+                            <input type="date" class="form-input" name="birthday" id="birthday" placeholder="Birth Day" min="1951-01-01" max="2001-01-01" required />
+                        </div>
+                        <div class="form-group">
+                            <div for="role">Role</div>
+                            <select class="form-input" id="role" name="role">
+                                <option selected>Choose...</option>
+                                <option value="ADM">Admin</option>
+                                <option value="MNG">Manager</option>
+                                <option value="STU">Student</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />

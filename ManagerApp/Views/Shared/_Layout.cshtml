@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -37,6 +37,13 @@
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
     <!--===============================================================================================-->
     <style>
+        .limiter {
+            background-color: #bee6fe;
+        }
+        #mysearch {
+            width: 300px;
+            float: right;
+        }
         th, tr, td {
             text-align: center;
         }
@@ -44,13 +51,10 @@
         td {
             padding: 10px;
         }
+
         body {
             padding: 0;
         }
-        .form-input {
-            padding: 9px 20px;
-        }
-        
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -143,38 +147,38 @@
                 </form>
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
-                @Html.Partial("_MainMenu")
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            @RenderBody()
-            <!-- .content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- Default to the left -->
-        </footer>
-    </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery 3 -->
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/js/main.js"></script>
-    <!-- Vendor JS-->
-    <script src="~/vendor/select2/select2.min.js"></script>
-    <script src="~/vendor/datepicker/moment.min.js"></script>
-    <script src="~/vendor/datepicker/daterangepicker.js"></script>
-    <!-- Main JS-->
-    <script src="~/js/global.js"></script>
+@Html.Partial("_MainMenu")
+<!-- /.sidebar-menu -->
+</section>
+<!-- /.sidebar -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+@RenderBody()
+<!-- .content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Main Footer -->
+<footer class="main-footer">
+    <!-- Default to the left -->
+</footer>
+</div>
+<!-- ./wrapper -->
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 3 -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/dist/js/adminlte.min.js"></script>
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/js/main.js"></script>
+<!-- Vendor JS-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<script src="~/vendor/datepicker/moment.min.js"></script>
+<script src="~/vendor/datepicker/daterangepicker.js"></script>
+<!-- Main JS-->
+<script src="~/js/global.js"></script>
 </body>
 </html>

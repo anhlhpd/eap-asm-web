@@ -13,31 +13,31 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Class ID:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="id">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Class name:</label>
+                        <label class="col-lg-3 control-label">Current Subject Id</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="currentSubjectId">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Start Date:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="date" value="">
+                            <input class="form-control" type="date" value="" name="startDate">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Session:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="session">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input type="button" class="btn btn-primary" value="Save">
+                            <input type="button" class="btn btn-primary form-submit" value="Save" id="submit">
                             <span></span>
                             <input type="reset" class="btn btn-default" value="Cancel">
                         </div>
@@ -48,9 +48,79 @@
     </div>
     <hr>
 </section>
-<!-- Main content -->
-<section class="content container-fluid">
-    <!--------------------------
-    | Your Page Content Here |
-    -------------------------->
-</section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + 'gCnKQJhz1khepLihmKpRpFbx0gL/nSJ'
+            },
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                var date = function formatDate() {
+                    var d = new Date(data.startDate),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    return [year, month, day].join('-');
+                }
+                $('input[name="id"]').val(data.id);
+                $('input[name="currentSubjectId"]').val(data.currentSubjectId);
+                $('input[name="startDate"]').val(date);
+                $('input[name="session"]').val(data.session);
+            },
+            error: function (r, exception) {
+                alert('Not okie ' + r);
+                console.log(exception);
+            }
+        });
+    });
+
+    $('#submit').click(function () {
+        var token = localStorage.getItem('token-key');
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        var data = {
+            "id": id,
+            "startDate": $('input[name="startDate"]').val(),
+            "session": $('input[name="session"]').val(),
+            "status": 1,
+            "currentSubjectId": $('input[name="currentSubjectId"]').val(),
+            "subject": null
+        }
+        console.log(JSON.stringify(data));
+        $.ajax({
+            method: 'PUT',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + 'gCnKQJhz1khepLihmKpRpFbx0gL/nSJ',
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Origin': true
+            },
+            crossDomain: true,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                alert('sucess');
+                $('.form-group').submit();
+            },
+            error: function (r, exception) {
+                console.log('nooooo');
+                console.log(r);
+            }
+        });
+    });
+</script>

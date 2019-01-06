@@ -1,0 +1,36 @@
+﻿@RenderBody()
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="limiter">
+        <div class="container-table150">
+            <div class="wrap-table100">
+                <div class="table100 ver1">
+                    <div class="table100-firstcol">
+                    </div>
+
+                    <div class="wrap-table100-nextcols js-pscroll">
+                        <div class="table100-nextcols">
+                            <table>
+                                <thead>
+                                    <tr class="row100 head">
+                                        <th class="cell100 column2">UserName</th>
+                                        <th class="cell100 column3">FirstName</th>                                       
+                                        <th class="cell100 column4">Birthday</th>                                       
+                                        <th class="cell100 column8">
+                                            Action
+                                            <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
+                                            <button><i class="fa fa-trash"></i> Trash</button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</section>

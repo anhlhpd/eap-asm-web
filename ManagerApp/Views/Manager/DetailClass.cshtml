@@ -1,9 +1,24 @@
 ﻿@RenderBody()
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Detail of Class";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
+    <div id="className"></div>
+    <div>
+        Start Date:
+        <div id="startDate"></div>
+    </div>
+    <div>
+        Current Subject:
+        <div id="currentSubject"></div>
+        <input type="button" value="Create Marks" onclick="location.href='~/AddMark/' + ViewData['clazzId']">
+    </div>
+    <div id="currentSubject"></div>
+    <div id="session"></div>
+    <div id="subjects"></div> 
+    // list all subjects for this class
+    <div>List Student</div>
     <div class="limiter">
         <div class="container-table150">
             <div class="wrap-table100">
@@ -16,19 +31,25 @@
                             <table>
                                 <thead>
                                     <tr class="row100 head">
-                                        <th class="cell100 column2">ClassName</th>
-                                        <th class="cell100 column3">Create At Time</th>
-                                        <th class="cell100 column4">Current Subject</th>
-                                        <th class="cell100 column5">Subject Name</th>
-                                        <th class="cell100 column6">List Student</th>
-                                        <th class="cell100 column7">
-                                            Action
-                                            <button><i class="fa fas fa-edit"></i>Edit</button>&emsp;
-                                            <button><i class="fa fa-trash"></i>Trash</button>
-                                        </th>
+                                        <th style="padding: 20px;">ID</th>
+                                        <th class="cell100 column2">Username</th>
+                                        <th class="cell100 column3">Last Name</th>
+                                        <th class="cell100 column4">First Name</th>
+                                        <th class="cell100 column5">Gender</th>
+                                        <th class="cell100 column6">Theory</th>
+                                        <th class="cell100 column7">Practice</th>
+                                        <th class="cell100 column8">Assignment</th>
+                                        <th class="cell100 column9">Total Mark</th>
+                                        <th class="cell100 column10">Pass Status</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    // ajax get
+                                </tbody>
                             </table>
+                            <div>
+                                <input type="button" value="submit" id="btnSubmitMarks">
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -36,3 +57,52 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + ViewData["clazzId"] + '/Students', // 
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
+                    htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
+                    htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
+                    htmlContent += '<th class="cell100 column3">' + data[i].generalInfomation.firstname + '</th>';
+                    htmlContent += '<th class="cell100 column4">' + data[i].generalInfomation.lastname + '</th>';            
+                    htmlContent += '<th class="cell100 column5">' + data[i].generalInfomation.gender + '</th>';
+                    htmlContent += '</tr>'
+                }
+                $('tbody').html(htmlContent);
+            },
+            error: function (jqXHR, exception) {
+                alert('Not okie get students');
+            }
+        });
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazzes/' + ViewData["clazzId"], 
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            success: function (data, textStatus, jqXHR) {
+                $('#startDate').html(data.startDate);
+                $('#currentSubject').html() = data.currentSubject;
+                $('#session').html() = data.session;
+            },
+            error: function (jqXHR, exception) {
+                alert('Not okie get class info.');
+            }
+        });
+    });
+    
+</script>

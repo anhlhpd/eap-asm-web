@@ -12,12 +12,17 @@ namespace ManagerApp.Controllers
         {
             return View();
         }
-        public IActionResult CreateMark()
+        [HttpGet("?clazzId={clazzId}&subjectId={subjectId}")]
+        public IActionResult AddMark([FromQuery] string clazzId, string subjectId)
         {
+            ViewData["clazzId"] = clazzId;
+            ViewData["subjectId"] = subjectId;
             return View();
         }
-        public IActionResult EditMark()
+        [HttpGet("/{clazzId}")]
+        public IActionResult DetailClass([FromRoute] string clazzId)
         {
+            ViewData["clazzId"] = clazzId;
             return View();
         }
         public IActionResult ListStudent()

@@ -29,7 +29,7 @@
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
                                     <th class="cell100 column2">Start Time</th>
-                                    <th class="cell100 column3">session</th>
+                                    <th class="cell100 column3">Session</th>
                                     <th class="cell100 column8">Action</th>
                                 </tr>
                             </thead>
@@ -86,4 +86,37 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script>
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'aBbnaARz1kiJXcCaMEnVRJGPlEokFtS3'
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].generalInformation.startTime + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.session + '</td>';                    
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.tb-content').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    </script>
 </section>

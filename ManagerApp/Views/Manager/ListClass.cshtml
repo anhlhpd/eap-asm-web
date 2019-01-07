@@ -59,14 +59,13 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     var htmlContent = '';
-                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         var date = data[i].startDate;
                         date = formatDate(date);
                         htmlContent += '<tr class="row100 body">'
                         htmlContent += '<td class="">' + data[i].id + '</td>';
-                        htmlContent += '<td class="cell100 column2">' + data[i].startDate + '</td>';
-                        htmlContent += '<td class="cell100 column3">' + data[i].session. + '</td>';                    
+                        htmlContent += '<td class="cell100 column2">' + date + '</td>';
+                        htmlContent += '<td class="cell100 column3">' + data[i].session + '</td>';                    
                         htmlContent += '<td class="cell100 column8">';
                         htmlContent += '<a href="/Manager/EditClass/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
                         htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>&emsp;';

@@ -61,16 +61,15 @@
             success: function (data, textStatus, jqXHR) {
                 var htmlContent = '';
                 for (var i = 0; i < data.length; i++) {
-                    console.log(data);
                     htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
                     htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
                     htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
                     htmlContent += '<th class="cell100 column3">' + data[i].generalInformation.firstName + '</th>';
                     htmlContent += '<th class="cell100 column4">' + data[i].generalInformation.lastName + '</th>';            
                     htmlContent += '<th class="cell100 column5">' + data[i].generalInformation.gender + '</th>';
-                    htmlContent += '<th class="cell100 column6"><input type="number" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column7"><input type="number" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column8"><input type="number" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
+                    htmlContent += '<th class="cell100 column6"><input type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column7"><input type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column8"><input type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
                     htmlContent += '<th class="cell100 column9" id="total-'+ data[i].id +'"></th>'
                     htmlContent += '<th class="cell100 column10" id="status-'+ data[i].id +'"></th>';
                     htmlContent += '</tr>'

@@ -64,7 +64,7 @@
             data: JSON.stringify(data),
             success: function (data, textStatus, jqXHR) {
                 console.log('Subject created successfully!');
-                console.log(data);
+                window.location.href = "/Manager/ListSubject";
             },
             error: function (jqXHR, exception) {
                 console.log('An error happened. An subject wasn`t created');

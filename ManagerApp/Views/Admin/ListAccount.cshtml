@@ -55,13 +55,15 @@
         url: 'https://eap-asm.azurewebsites.net/api/Accounts',
         headers: {
             'content-type': 'application/json',
-            'Authorization': 'Basic ' + 'WhCMvXxz1kjxIS4bjZLTYkqorOW64Z'
+            'Authorization': 'Basic ' + 'pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Origin': true
         },
         success: function (data, textStatus, jqXHR) {
             var htmlContent = '';
             for (var i = 0; i < data.length; i++) {
                 htmlContent += '<tr class="row100 body">'
-                htmlContent += '<td class="">' + data[i].id+ '</td>';
+                htmlContent += '<td class="id">' + data[i].id+ '</td>';
                 htmlContent += '<td class="cell100 column2">' + data[i].username + '</td>';
                 htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.firstName + '</td>';
                 htmlContent += '<td class="cell100 column4">' + data[i].generalInformation.lastName + '</td>';
@@ -70,7 +72,7 @@
                 htmlContent += '<td class="cell100 column7">' + data[i].email + '</td>';
                 htmlContent += '<td class="cell100 column8">';
                 htmlContent += '<a href="/Admin/EditAccount/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
-                htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                htmlContent += '<button><i class="fa fa-trash delete"></i> Trash</button>';
                 htmlContent += '</td>';
                 htmlContent += '</tr>';
             }
@@ -80,5 +82,41 @@
             alert('Not okie');
             console.log(r);
         }
+    });
+    $(document).on('click', '.delete' , function() {
+        alert(1);
+        var id = this.closest('tr td.id').text();
+        console.log(id);
+        /*$.ajax({
+            method: 'DELETE',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts' + id,
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'WhCMvXxz1kjxIS4bjZLTYkqorOW64Z'
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id+ '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].username + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.firstName + '</td>';
+                    htmlContent += '<td class="cell100 column4">' + data[i].generalInformation.lastName + '</td>';
+                    htmlContent += '<td class="cell100 column5">' + data[i].generalInformation.gender + '</td>';
+                    htmlContent += '<td class="cell100 column6">' + data[i].generalInformation.birthday + '</td>';
+                    htmlContent += '<td class="cell100 column7">' + data[i].email + '</td>';
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<a href="/Admin/EditAccount/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash delete"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.tb-content').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });*/
     });
 </script>

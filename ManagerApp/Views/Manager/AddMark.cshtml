@@ -54,7 +54,7 @@
         var token = localStorage.getItem('token-key');
         var clazzId = getParamValue("clazzId");
         var subjectId = getParamValue("subjectId");
-        $('#currentSubjectId').html("Create Marks for " + clazzId + " on subject " + clazzId);
+        $('#currentSubjectId').html("Create Marks for " + clazzId + " on subject " + subjectId);
         $.ajax({
             method: 'GET',
             url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + clazzId + '/Students',

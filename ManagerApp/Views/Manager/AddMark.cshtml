@@ -36,7 +36,7 @@
                             <tbody></tbody>
                         </table>
                         <div class="pull-right">
-                            <input type="button" value="submit" id="btnSubmitMarks" class="btn btn-danger">
+                            <input type="button" value="Add Mark(s)" id="btnSubmitMarks" class="btn btn-danger">
                         </div>
                     </div>
 
@@ -66,16 +66,16 @@
                 var htmlContent = '';
                 for (var i = 0; i < data.length; i++) {
                     htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
-                    htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
-                    htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
-                    htmlContent += '<th class="cell100 column3">' + data[i].generalInformation.firstName + '</th>';
-                    htmlContent += '<th class="cell100 column4">' + data[i].generalInformation.lastName + '</th>';            
-                    htmlContent += '<th class="cell100 column5">' + data[i].generalInformation.gender + '</th>';
-                    htmlContent += '<th class="cell100 column6"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column7"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column8"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
-                    htmlContent += '<th class="cell100 column9" id="total-'+ data[i].id +'"></th>'
-                    htmlContent += '<th class="cell100 column10" id="status-'+ data[i].id +'"></th>';
+                    htmlContent += '<th style="padding: 20px; font-weight: 400;">' + data[i].id+ '</th>';
+                    htmlContent += '<th class="cell100 column2" style="font-weight: 400;">' + data[i].username + '</th>';
+                    htmlContent += '<th class="cell100 column3" style="font-weight: 400;">' + data[i].generalInformation.firstName + '</th>';
+                    htmlContent += '<th class="cell100 column4" style="font-weight: 400;">' + data[i].generalInformation.lastName + '</th>';            
+                    htmlContent += '<th class="cell100 column5" style="font-weight: 400;">' + data[i].generalInformation.gender + '</th>';
+                    htmlContent += '<th class="cell100 column6" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column7" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column8" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
+                    htmlContent += '<th class="cell100 column9" style="font-weight: 400;" id="total-'+ data[i].id +'"></th>'
+                    htmlContent += '<th class="cell100 column10" style="font-weight: 400;" id="status-'+ data[i].id +'"></th>';
                     htmlContent += '</tr>'
                 }
                 $('tbody').html(htmlContent);

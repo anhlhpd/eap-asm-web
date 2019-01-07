@@ -149,13 +149,13 @@
                 <!-- Sidebar Menu -->
                 @Html.Partial("_MainMenu")
                 <!-- /.sidebar-menu -->
-                </section>
-                <!-- /.sidebar -->
-                </aside>
-                <!-- Content Wrapper. Contains page content -->
-                <div class="content-wrapper">
-                    <!-- Content Header (Page header) -->
-                @RenderBody()
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+@RenderBody()
 <!-- .content -->
 </div>
 <!-- /.content-wrapper -->
@@ -180,5 +180,31 @@
 <script src="~/vendor/datepicker/daterangepicker.js"></script>
 <!-- Main JS-->
 <script src="~/js/global.js"></script>
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            url: 'https://eap-asm.azurewebsites.net/api/Authentication/TokenLogin?AccessToken=' + token,
+            method: 'POST',
+            success: function (data) {
+                console.log(data.accountId.substring(0, 3));
+                htmlContent = "";
+                if (data.accountId.substring(0, 3) == "MNG") {
+                    localStorage.setItem("clientId", data.accountId.substring(0, 3));
+                    $(".adm").addClass("hidden");
+                }
+                if (data.accountId.substring(0, 3) == "ADM") {
+                    localStorage.setItem("clientId", "ADM");
+                    $(".mng").addClass("hidden");
+                };
+
+            },
+            error: function () {
+                alert("There's an error. Please try again later.")
+            }
+        });
+    });
+</script>
 </body>
 </html>

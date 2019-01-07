@@ -124,9 +124,9 @@
                 withCredentials: true
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(data);
                 alert('sucess');
                 $('.form-group').submit();
+                window.location.href = "/Admin/ListAccount";
             },
             error: function (r, exception) {
                 console.log('nooooo');

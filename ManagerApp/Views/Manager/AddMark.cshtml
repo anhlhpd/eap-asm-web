@@ -164,6 +164,7 @@
                 data: JSON.stringify(data),
                 success: function (data, textStatus, jqXHR) {
                     alert('Added marks successfully!');
+                    window.location.href= "/Manager/DetailClass";
                 },
                 error: function (r, exception) {
                     alert('Not okie');

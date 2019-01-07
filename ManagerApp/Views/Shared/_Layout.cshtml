@@ -128,6 +128,7 @@
                     </div>
                     <div class="pull-left info">
                         <p class="user-name"></p>
+
                         <!-- Status -->
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -147,13 +148,13 @@
                 <!-- Sidebar Menu -->
                 @Html.Partial("_MainMenu")
                 <!-- /.sidebar-menu -->
-                </section>
-                <!-- /.sidebar -->
-                </aside>
-                <!-- Content Wrapper. Contains page content -->
-                <div class="content-wrapper">
-                    <!-- Content Header (Page header) -->
-                @RenderBody()
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+@RenderBody()
 <!-- .content -->
 </div>
 <!-- /.content-wrapper -->
@@ -201,15 +202,19 @@
         else {
             if (!isLoginPage) {
                 $.ajax({
-                    method: 'GET',
-                    url: 'https://eap-asm.azurewebsites.net/api/Authentication?AccessToken=' + token,
-                    headers: {
-                        'content-type': 'application/json'
-                    },
+                    method: 'POST',
+                    url: 'https://eap-asm.azurewebsites.net/api/Authentication/TokenLogin?AccessToken=' + token,
                     success: function (data) {
-                        $('.user-name').each(function (index, value) {
-                            $(value).html(data.name);
-                        });
+                        $('.user-name').text(data.firstName + ' ' + data.lastName);
+                        htmlContent = "";
+                        if (data.accountId.substring(0, 3) == "MNG") {
+                            localStorage.setItem("clientId", data.accountId.substring(0, 3));
+                            $(".adm").addClass("hidden");
+                        }
+                        if (data.accountId.substring(0, 3) == "ADM") {
+                            localStorage.setItem("clientId", "ADM");
+                            $(".mng").addClass("hidden");
+                        };
                         $('.navbar-custom-menu').removeAttr('style');
                     },
                     error: function (r, exception) {

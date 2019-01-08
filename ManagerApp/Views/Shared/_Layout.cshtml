@@ -201,6 +201,8 @@
                 alert("You're not logged in!");
                 window.location.href = "../Home/Login";
             }
+            $(".adm").addClass("hidden");
+            $(".mng").addClass("hidden");
         }
         else {
             if (!isLoginPage) {

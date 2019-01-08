@@ -1,18 +1,63 @@
 ﻿<ul class="sidebar-menu" data-widget="tree">
     <li class="header">HEADER</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-    <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-    <li class="treeview">
+    <li class="treeview adm">
         <a href="#">
-            <i class="fa fa-link"></i> <span>Multilevel</span>
+            <i class="fa fa-link"></i> <span>Account</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="/manager/createstudent">Add Account</a></li>
+            <li><a href="/manager/liststudent">List Account</a></li>
         </ul>
     </li>
+    <li class="treeview mng">
+        <a href="#">
+            <i class="fa fa-link"></i> <span>Student</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu mng">
+            <li><a href="/manager/createstudent">Add Student</a></li>
+            <li><a href="/manager/liststudent">List Student</a></li>
+        </ul>
+    </li>
+    <li class="treeview mng">
+        <a href="#">
+            <i class="fa fa-link"></i> <span>Class</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/manager/createclass">Add Class</a></li>
+            <li><a href="/manager/listclass">List Class</a></li>
+        </ul>
+    </li>
+    <li class="treeview mng">
+        <a href="#">
+            <i class="fa fa-link"></i> <span>Subject</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/manager/createsubject">Add Subject</a></li>
+            <li><a href="/manager/listsubject">List Subject</a></li>
+        </ul>
+    </li>
+    @*<li class="treeview">
+            <a href="#">
+                <i class="fa fa-link"></i> <span>Mark</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/manager/createmark">Add Mark</a></li>
+            </ul>
+        </li>*@
 </ul>

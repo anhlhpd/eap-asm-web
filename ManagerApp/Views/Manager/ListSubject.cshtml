@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "List Accounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    table {
+        width: 100%;
+    }
+</style>
+<section class="content-header">
+    <div class="limiter">
+        <div class="container-table150">
+            <div class="wrap-table100">
+                <h2 class="form-title">List Subject</h2>
+                <form action="#" method="get" class="sidebar-form" id="mysearch">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <div class="table100 ver1">
+                    <div class="#">
+                        <table style="background-color: white;">
+                            <thead>
+                                <tr class="row100 head">
+                                    <th class="" style="padding: 20px;">ID</th>
+                                    <th class="cell100 column2">Name</th>
+                                    <th class="cell100 column3">Description</th>
+                                    <th class="cell100 column4">Status</th>
+                                    <th class="cell100 column8">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        var token = localStorage.getItem('token-key');
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Subjects/All',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].name + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].description + '</td>';
+                    htmlContent += '<td class="cell100 column4">' + data[i].status + '</td>';
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<a href="/Manager/EditSubject/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.body').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('There"s an error. Please try again later.');
+                console.log(r);
+            }
+        });
+    });
+</script>

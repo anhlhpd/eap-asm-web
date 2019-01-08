@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form role="form" class="signup-form">
+                        <h2 class="form-title">Student Information</h2>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="firstName" placeholder="First Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="lastName" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="number" class="form-input" value="" name="phone" placeholder="Your Phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Birth Day</div>
+                                <input type="date" class="form-input" value="" name="birthday" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Gender</div>
+                                <select class="form-input" id="gender-student" name="gender">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="email" class="form-input" value="" name="email" placeholder="Your Email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" value="" name="password" placeholder="Password" />
+                                <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Save Edit" />&nbsp;
+                            <input type="reset" class="form-submit" value="Cancel">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+    var token = localStorage.getItem('token-key');
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                var date = function formatDate() {
+                    var d = new Date(data.generalInformation.birthday),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    return [year, month, day].join('-');
+                }
+                $('input[name="firstName"]').val(data.generalInformation.firstName);
+                $('input[name="lastName"]').val(data.generalInformation.lastName);
+                $('input[name="email"]').val(data.email);
+                $('input[name="birthday"]').val(date);
+                $('input[name="gender"]').val(data.generalInformation.gender);
+                $('input[name="phone"]').val(data.generalInformation.phone);
+                $('input[name="createdAt"]').val(data.createdAt);
+            },
+            error: function (r, exception) {
+                alert('Not okie ' + r);
+                console.log(exception);
+            }
+        });
+    });
+
+    $('#submit').click(function () {
+        var token = localStorage.getItem('token-key');
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        var data;
+        if ($('input[name="password"]').val() == "") {
+            data = {
+                "id": id,
+                "email": $('input[name="email"]').val(),
+                "createdAt": $('input[name="createdAt"]').val(),
+                "updatedAt": new Date(),
+                "generalInformation": {
+                    "accountId": id,
+                    "firstName": $('input[name="firstName"]').val(),
+                    "lastName": $('input[name="lastName"]').val(),
+                    "birthday": $('input[name="birthday"]').val(),
+                    "phone": $('input[name="phone"]').val(),
+                    "gender": $('input[name="gender"]').val()
+                }
+            }
+        }
+        else data = {
+            "id": id,
+            "email": $('input[name="email"]').val(),
+            "createdAt": $('input[name="createdAt"]').val(),
+            "updatedAt": new Date(),
+            "generalInformation": {
+                "accountId": id,
+                "firstName": $('input[name="firstName"]').val(),
+                "lastName": $('input[name="lastName"]').val(),
+                "birthday": $('input[name="birthday"]').val(),
+                "phone": $('input[name="phone"]').val(),
+                "gender": $('input[name="gender"]').val()
+            },
+            "password": $('input[name="password"]').val()
+        };
+        console.log(JSON.stringify(data));
+        $.ajax({
+            method: 'PUT',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token,
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Origin': true
+            },
+            crossDomain: true,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data, textStatus, jqXHR) {
+                alert('sucess');
+                $('.form-group').submit();
+                window.location.href= "/Manager/ListStudent";
+            },
+            error: function (r, exception) {
+                console.log('nooooo');
+                console.log(r);
+            }
+        });
+    });
+</script>
+

@@ -1,8 +1,10 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin Panel</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -11,12 +13,52 @@
     <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/vendor/mdi-font/css/material-design-iconic-font.min.css" media="all">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="~/dist/css/skins/skin-blue.min.css">
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link href="~/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <!--===============================================================================================-->
+    <style>
+        .limiter {
+            background-color: #bee6fe;
+        }
+        #mysearch {
+            width: 300px;
+            float: right;
+        }
+        th, tr, td {
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        body {
+            padding: 0;
+        }
+        #mycss{
+            border:hidden;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -36,27 +78,25 @@
                     <span class="sr-only">Toggle navigation</span>
                 </a>
                 <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
+                <div class="navbar-custom-menu" style="display: none;">
                     <ul class="nav navbar-nav">
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <img src="~/dist/img/default-user.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Shehryar khan</span>
+                                <span class="hidden-xs user-name"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        Shehryar khan - Coding Infinite
-                                        <small>Member since Nov. 2012</small>
+                                    <img src="~/dist/img/default-user.jpg" class="img-circle" alt="User Image">
+                                    <p class="user-name">
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
+                                @*<!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
@@ -64,14 +104,14 @@
                                         </div>
                                     </div>
                                     <!-- /.row -->
-                                </li>
+                                </li>*@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
+                                    @*<div class="pull-left">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
+                                    </div>*@
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a id="btnSignOut" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -87,10 +127,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="~/dist/img/default-user.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Shehryar Khan</p>
+                        <p class="user-name"></p>
+
                         <!-- Status -->
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -116,23 +157,78 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            @RenderBody()
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- Default to the left -->
-            <strong>Copyright &copy; 2018 <a href="https://codinginfinite.com">CodingInfinite</a>.</strong> All rights reserved.
-        </footer>
-    </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery 3 -->
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
+@RenderBody()
+<!-- .content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Main Footer -->
+<footer class="main-footer">
+    <!-- Default to the left -->
+</footer>
+</div>
+<!-- ./wrapper -->
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 3 -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/dist/js/adminlte.min.js"></script>
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/js/main.js"></script>
+<!-- Vendor JS-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<script src="~/vendor/datepicker/moment.min.js"></script>
+<script src="~/vendor/datepicker/daterangepicker.js"></script>
+<!-- Main JS-->
+<script src="~/js/global.js"></script>
+<script>
+    $(document).ready(function () {
+        var token = localStorage.getItem('token-key');
+        var isLoginPage = location.href.indexOf("Login") >= 0 || location.href.indexOf("login") >= 0;
+        $('#btnSignOut').click(function () {
+            localStorage.clear();
+            window.location.href = "../Home/Login";
+        });
+        if (token == null) {
+            $('img').each(function (index, value) {
+                $(value).attr('src', '/dist/img/no-user.jpg');
+            });
+            $('.user-name').each(function (index, value) {
+                $(value).html("");
+            });
+            if (!isLoginPage) {
+                alert("You're not logged in!");
+                window.location.href = "../Home/Login";
+            }
+        }
+        else {
+            if (!isLoginPage) {
+                $.ajax({
+                    method: 'POST',
+                    url: 'https://eap-asm.azurewebsites.net/api/Authentication/TokenLogin?AccessToken=' + token,
+                    success: function (data) {
+                        $('.user-name').text(data.firstName + ' ' + data.lastName);
+                        htmlContent = "";
+                        if (data.accountId.substring(0, 3) == "MNG") {
+                            localStorage.setItem("clientId", data.accountId.substring(0, 3));
+                            $(".adm").addClass("hidden");
+                        }
+                        if (data.accountId.substring(0, 3) == "ADM") {
+                            localStorage.setItem("clientId", "ADM");
+                            $(".mng").addClass("hidden");
+                        };
+                        $('.navbar-custom-menu').removeAttr('style');
+                    },
+                    error: function (r, exception) {
+                        alert('Your session expired! Please login again!');
+                        window.location.href = "../Home/Login";
+                    }
+                });
+            }
+        }
+
+    })
+</script>
 </body>
 </html>

@@ -1,0 +1,157 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="create-account-form" class="signup-form">
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="firstname" id="firstname" placeholder="First Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="lastname" id="lastname" placeholder="Last Name" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="phone" id="phone" placeholder="Your Phone" />
+                        </div>
+                        <div class="form-group">
+                            <div for="gender">Gender</div>
+                            <select class="form-input" id="create-account-form-inputGroup" name="gender">
+                                <option selected>Choose...</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div for="birthday">Birth Day</div>
+                            <input type="date" class="form-input" name="birthday" id="birthday" placeholder="Birth Day" min="1951-01-01" max="2001-01-01" required />
+                        </div>
+                        <div class="form-group">
+                            <div for="role">Role</div>
+                            <select class="form-input" id="role" name="role">
+                                <option selected>Choose...</option>
+                                <option value="ADM">Admin</option>
+                                <option value="MNG">Manager</option>
+                                <option value="STU">Student</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" name="submit" id="submit" class="form-submit" value="Sign up" />
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Have already an account ? <a href="#" class="loginhere-link">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/js/admin.js"></script>
+<script>
+    $('#create-account-form').validate({
+        'rules': {
+            'firstname': {
+                'required': true,
+                'minlength': 1,
+                'maxlength': 30
+            },
+            'lastname': {
+                'required': true,
+                'minlength': 1,
+                'maxlength': 50
+            },
+            'gender': {
+                'required': true
+            },
+            'role': {
+                'required': true
+            },
+            // 'birthday': {
+            //     'required': true
+            // },
+            // validate trực tiếp ở HTML
+            'phone': {
+                'required': true,
+                'minlength': 10,
+                'maxlength': 50
+            }
+        },
+        'messages': {
+            'firstname': {
+                'required': 'Please input first name.',
+                'minlength': 'First name is at least {0} character(s) long.',
+                'maxlength': 'First name is at best {0} characters long.'
+            },
+            'lastname': {
+                'required': 'Please input last name.',
+                'minlength': 'Last name is at least {0} character(s) long.',
+                'maxlength': 'Last name is at best {0} characters long.'
+            },
+            'gender': {
+                'required': 'Please input gender.'
+            },
+            'role': {
+                'required': 'Please input role.'
+            },
+            'phone': {
+                'required': 'Please input phone number.',
+                'minlength': 'Phone number is at least {0} character(s) long.',
+                'maxlength': 'Phone number is at best {0} characters long.'
+            }
+        }
+    });
+
+
+    $('#submit').click(function () {
+        var token = localStorage.getItem('token-key');
+        function getParamValue(param) {
+            var urlParamString = location.search.split(param + "=");
+            if (urlParamString.length <= 1) return "";
+            else {
+                var tmp = urlParamString[1].split("&");
+                return tmp[0];
+            }
+        }
+        var data = {
+            "firstName": $('input[name="firstname"]').val(),
+            "lastName": $('input[name="lastname"]').val(),
+            "phone": $('input[name="phone"]').val(),
+            "gender": $('select[name="gender"]').val(),
+            "birthday": $('input[name="birthday"]').val()
+        }
+        $.ajax({
+            method: 'POST',
+            url: 'https://eap-asm.azurewebsites.net/api/GeneralInformations/' + $('#role').val(),
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                alert('Accounts created successfully!');
+                window.location.href = "/Admin/ListAccount";
+            },
+            error: function (jqXHR, exception) {
+                console.log('An error happened. An subject wasn`t created');
+                console.log(jqXHR);
+            }
+        });
+    });
+</script>

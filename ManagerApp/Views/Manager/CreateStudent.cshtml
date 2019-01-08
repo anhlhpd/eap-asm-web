@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form role="form" class="signup-form">
+                        <h2 class="form-title">Create Student</h2>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="firstName" placeholder="First Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="lastName" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="number" class="form-input" value="" name="phone" placeholder="Your Phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Birth Day</div>
+                                <input type="date" class="form-input" value="" name="birthday" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div for="inputGroupSelect01">Gender</div>
+                                <select class="form-input" id="gender-student" name="gender">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="email" class="form-input" value="" name="email" placeholder="Your Email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" value="" name="password" placeholder="Password" />
+                                <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Save Edit" />&nbsp;
+                            <input type="reset" class="form-submit" value="Cancel">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!--------------------------
+    | Your Page Content Here |
+    -------------------------->
+</section>
+<section class="content container-fluid"></section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $("#btnSave").click(function () {
+        var token = localStorage.getItem('token-key');
+        var data = {
+            "firstName": $('input[name="firstName"]').val(),
+            "lastName": $('input[name="lastName"]').val(),
+            "birthday": $('input[name="birthday"]').val(),
+            "gender": $('select[name="gender"]').val(),
+            "phone": $('input[name="phone"]').val()
+        }
+        $.ajax({
+            method: 'POST',
+            url: 'https://eap-asm.azurewebsites.net/api/GeneralInformations/STU',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                alert("You have added a new student:\nUsername: " + data.username + "\nPassword: " + data.password);
+                window.location.href = "/Manager/ListStudent"
+            },
+            error: function (jqXHR, exception) {
+                console.log('An error happened. Please try again later.');
+                console.log(jqXHR);
+            }
+        });
+    });
+</script>

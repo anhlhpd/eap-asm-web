@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form role="form" class="signup-form">
+                        <h2 class="form-title">Create Class</h2>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="id" placeholder="Class ID" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="currentSubjectId" placeholder="Current Subject Id" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <div class="form-input">
+                                    <div for="inputGroupSelect01">Start Date:</div>
+                                    <input type="date" class="form-input" value="" name="startDate" placeholder="startDate" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input">
+                                <input type="text" class="form-input" value="" name="session" placeholder="Session:" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Save Edit" />&nbsp;
+                            <input type="reset" class="form-submit" value="Cancel">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<section class="content container-fluid"></section>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $("#btnSave").click(function () {
+        var token = localStorage.getItem('token-key');
+        console.log(token);
+        var data = {
+            "id": $('input[name="id"]').val(),
+            "startDate": $('input[name="startDate"]').val(),
+            "session": $('input[name="session"]').val(),
+            "currentSubjectId": $('input[name="currentSubjectId"]').val(),
+        }
+        $.ajax({
+            method: 'POST',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA'
+            },
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                window.location.href= "/Manager/ListClass";
+                console.log(data);
+            },
+            error: function (jqXHR, exception) {
+                console.log('An error happened. An class wasn`t created');
+                console.log(jqXHR);
+            }
+        });
+    });
+
+</script>

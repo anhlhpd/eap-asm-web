@@ -2,40 +2,44 @@
     ViewData["Title"] = "Add Mark";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    table {
+        width: 100%;
+    }
+    input[type=number] {
+        text-align: right;
+    }
+</style>
 <section class="content-header">
-    <div id="currentSubjectId"></div>
     <div class="limiter">   
         <div class="container-table150">
             <div class="wrap-table100">
+                <h2 id="currentSubjectId" style="align-content: center; padding: 20px;
+                                            text-transform: uppercase;"></h2>
                 <div class="table100 ver1">
                     <div class="table100-firstcol">
-                    </div>
-
-                    <div class="wrap-table100-nextcols js-pscroll">
-                        <div class="table100-nextcols">
-                            <table>
-                                <thead>
-                                    <tr class="row100 head">
-                                        <th style="padding: 20px;">ID</th>
-                                        <th class="cell100 column2">Username</th>
-                                        <th class="cell100 column3">Last Name</th>
-                                        <th class="cell100 column4">First Name</th>
-                                        <th class="cell100 column5">Gender</th>
-                                        <th class="cell100 column6">Theory</th>
-                                        <th class="cell100 column7">Practice</th>
-                                        <th class="cell100 column8">Assignment</th>
-                                        <th class="cell100 column9">Total Mark</th>
-                                        <th class="cell100 column10">Pass Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            <div>
-                                <input type="button" value="Submit" id="btnSubmitMarks">
-                            </div> 
+                        <table style="background-color: white;">
+                            <thead>
+                                <tr class="row100 head">
+                                    <th style="padding: 20px;">ID</th>
+                                    <th class="cell100 column2">Username</th>
+                                    <th class="cell100 column3">Last Name</th>
+                                    <th class="cell100 column4">First Name</th>
+                                    <th class="cell100 column5">Gender</th>
+                                    <th class="cell100 column6">Theory</th>
+                                    <th class="cell100 column7">Practice</th>
+                                    <th class="cell100 column8">Assignment</th>
+                                    <th class="cell100 column9">Total Mark</th>
+                                    <th class="cell100 column10">Pass Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="pull-right">
+                            <input type="button" value="Add Mark(s)" id="btnSubmitMarks" class="btn btn-danger">
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -50,7 +54,7 @@
         var token = localStorage.getItem('token-key');
         var clazzId = getParamValue("clazzId");
         var subjectId = getParamValue("subjectId");
-        $('#currentSubjectId').html("Create Marks for " + clazzId);
+        $('#currentSubjectId').html("Create Marks for " + clazzId + " on subject " + subjectId);
         $.ajax({
             method: 'GET',
             url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + clazzId + '/Students',
@@ -62,23 +66,23 @@
                 var htmlContent = '';
                 for (var i = 0; i < data.length; i++) {
                     htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
-                    htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
-                    htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
-                    htmlContent += '<th class="cell100 column3">' + data[i].generalInformation.firstName + '</th>';
-                    htmlContent += '<th class="cell100 column4">' + data[i].generalInformation.lastName + '</th>';            
-                    htmlContent += '<th class="cell100 column5">' + data[i].generalInformation.gender + '</th>';
-                    htmlContent += '<th class="cell100 column6"><input type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column7"><input type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
-                    htmlContent += '<th class="cell100 column8"><input type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
-                    htmlContent += '<th class="cell100 column9" id="total-'+ data[i].id +'"></th>'
-                    htmlContent += '<th class="cell100 column10" id="status-'+ data[i].id +'"></th>';
+                    htmlContent += '<th style="padding: 20px; font-weight: 400;">' + data[i].id+ '</th>';
+                    htmlContent += '<th class="cell100 column2" style="font-weight: 400;">' + data[i].username + '</th>';
+                    htmlContent += '<th class="cell100 column3" style="font-weight: 400;">' + data[i].generalInformation.firstName + '</th>';
+                    htmlContent += '<th class="cell100 column4" style="font-weight: 400;">' + data[i].generalInformation.lastName + '</th>';            
+                    htmlContent += '<th class="cell100 column5" style="font-weight: 400;">' + data[i].generalInformation.gender + '</th>';
+                    htmlContent += '<th class="cell100 column6" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column7" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column8" style="font-weight: 400;"><input style="background-color: #bee6fe;" placeholder="..." type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
+                    htmlContent += '<th class="cell100 column9" style="font-weight: 400;" id="total-'+ data[i].id +'"></th>'
+                    htmlContent += '<th class="cell100 column10" style="font-weight: 400;" id="status-'+ data[i].id +'"></th>';
                     htmlContent += '</tr>'
                 }
                 $('tbody').html(htmlContent);
                 calculateMarks();
             },
             error: function (jqXHR, exception) {
-                alert('Not okie');
+                alert('Not okie get students');
             }
         });
         // Calculate total and output pass status
@@ -93,18 +97,60 @@
                 theory.focusout(function () {
                     if ($(this).val().trim().length == 0) {
                         alert("Please input mark");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() > $(this).attr('max')) {
+                         alert("Mark exceeds maximum! Please input mark equal or below " + $(this).attr('max') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() < $(this).attr('min')) {
+                        alert("Mark less man minimum! Please input mark equal or above " + $(this).attr('min') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else {
+                        $(this).removeAttr('style');
                     }
                 });
                 var practice = $(value).find("[id^=practice]");
                 practice.focusout(function () {
                     if ($(this).val().trim().length == 0) {
                         alert("Please input mark");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() > $(this).attr('max')) {
+                        alert("Mark exceeds maximum! Please input mark equal or below " + $(this).attr('max') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() < $(this).attr('min')) {
+                        alert("Mark less man minimum! Please input mark equal or above " + $(this).attr('min') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else {
+                        $(this).removeAttr('style');
                     }
                 });
                 var assignment = $(value).find("[id^=assignment]");
                 assignment.focusout(function () {
                     if ($(this).val().trim().length == 0) {
                         alert("Please input mark");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() > $(this).attr('max')) {
+                        alert("Mark exceeds maximum! Please input mark equal or below " + $(this).attr('max') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else if ($(this).val().trim() < $(this).attr('min')) {
+                        alert("Mark less man minimum! Please input mark equal or above " + $(this).attr('min') + "!");
+                        $(this).val("");
+                        $(this).attr('style', 'background-color: #bee6fe;');
+                    }
+                    else {
+                        $(this).removeAttr('style');
                     }
                 });
                 $(value).focusout(function () {
@@ -130,6 +176,9 @@
             var token = localStorage.getItem('token-key');
             var data = [];
             $('input[type="number"]').each(function () {
+                if ($(this).val().trim().length == 0) {
+                    return false;
+                }
                 var markType = $(this).attr('id').split('-')[0];
                 switch (markType) {
                     case "theory":
@@ -153,23 +202,29 @@
                 };
                 data.push(mark);
             });
-            $.ajax({
-                method: 'POST',
-                url: 'https://eap-asm.azurewebsites.net/api/Marks/Manager',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Basic ' + token
-                },
-                data: JSON.stringify(data),
-                success: function (data, textStatus, jqXHR) {
-                    alert('Added marks successfully!');
-                    window.location.href= "/Manager/DetailClass";
-                },
-                error: function (r, exception) {
-                    alert('Not okie');
-                    console.log(r);
-                }
-            });
+            if (data.length === 0) {
+                alert("No mark was input");
+            }
+            else {
+                $.ajax({
+                    method: 'POST',
+                    url: 'https://eap-asm.azurewebsites.net/api/Marks/Manager',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Basic ' + token
+                    },
+                    data: JSON.stringify(data),
+                    success: function (data, textStatus, jqXHR) {
+                        alert('Added mark(s) successfully!');
+                        window.location.href = "/Manager/DetailClass/" + clazzId;
+                    },
+                    error: function (r, exception) {
+                        alert('Not okie');
+                        console.log(r);
+                    }
+                });
+            }
+            
         });
         function getParamValue(param) {
             var urlParamString = location.search.split(param + "=");

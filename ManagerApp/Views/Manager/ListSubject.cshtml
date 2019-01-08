@@ -52,15 +52,13 @@
         var token = localStorage.getItem('token-key');
         $.ajax({
             method: 'GET',
-            url: 'https://eap-asm.azurewebsites.net/api/Subjects',
+            url: 'https://eap-asm.azurewebsites.net/api/Subjects/All',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': 'Basic ' + token
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(data);
                 var htmlContent = '';
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     htmlContent += '<tr class="row100 body">'
                     htmlContent += '<td class="">' + data[i].id + '</td>';
@@ -76,7 +74,7 @@
                 $('.body').html(htmlContent);
             },
             error: function (r, exception) {
-                alert('Not okie');
+                alert('There"s an error. Please try again later.');
                 console.log(r);
             }
         });

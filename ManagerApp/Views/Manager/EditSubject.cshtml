@@ -41,7 +41,7 @@
 </script>
 <script>
     $(document).ready(function () {
-    var token = localStorage.getItem('token-key');
+        var token = localStorage.getItem('token-key');
         var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
         $.ajax({
             method: 'GET',
@@ -72,7 +72,7 @@
         });
     });
 
-    $('#submit').click(function () {
+    $('#btnSave').click(function () {
         var token = localStorage.getItem('token-key');
         var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
         var data = {
@@ -97,9 +97,8 @@
                 withCredentials: true
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(data);
-                alert('sucess');
-                $('.form-group').submit();
+                alert('Yout have successfully edit this class!');
+                window.location.href= "/Manager/ListSubject";
             },
             error: function (r, exception) {
                 console.log('There"s an error. Please try again later!');

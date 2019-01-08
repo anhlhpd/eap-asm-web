@@ -33,6 +33,7 @@
                                     <th class="" style="padding: 20px;">ID</th>
                                     <th class="cell100 column2">Start Time</th>
                                     <th class="cell100 column3">Session</th>
+                                    <th class="cell100 column8">Status</th>
                                     <th class="cell100 column8">Action</th>
                                 </tr>
                             </thead>
@@ -59,18 +60,17 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     var htmlContent = '';
-                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         var date = data[i].startDate;
                         date = formatDate(date);
                         htmlContent += '<tr class="row100 body">'
                         htmlContent += '<td class="">' + data[i].id + '</td>';
-                        htmlContent += '<td class="cell100 column2">' + data[i].startDate + '</td>';
-                        htmlContent += '<td class="cell100 column3">' + data[i].session. + '</td>';                    
+                        htmlContent += '<td class="cell100 column2">' + date + '</td>';
+                        htmlContent += '<td class="cell100 column3">' + data[i].session + '</td>';                    
                         htmlContent += '<td class="cell100 column8">';
                         htmlContent += '<a href="/Manager/EditClass/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
                         htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>&emsp;';
-                        htmlContent += '<a href="/Manager/DetailClass/' + data[i].id + '"><button><i class="fa fas fa-plus"></i>Create Marks</button></a>';
+                        htmlContent += '<a href="/Manager/DetailClass/' + data[i].id + '"><button><i class="fa fas fa-plus"></i>Detail</button></a>';
                         htmlContent += '</td>';
                         htmlContent += '</tr>';
                     }
@@ -82,14 +82,40 @@
                 }
             });
         });
-        function formatDate(startTime) {
-            var d = new Date(startTime),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-            return [year, month, day].join('-');
-        }
+        $(document).on('click', '.delete', function () {
+            
+            var id = $(this).closest('tr').children('td.id').text();
+            
+            $.ajax({
+                method: 'DELETE',
+                url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + id,
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Basic ' + 'pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA'
+                },
+                success: function (data, textStatus, jqXHR) {
+                    alert('ok');
+                    var htmlContent = '';
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        htmlContent += '<tr class="row100 body">'
+                        htmlContent += '<td class="id">' + data[i].id + '</td>';
+                        htmlContent += '<td class="cell100 column2">' + data[i].startDate + '</td>';
+                        htmlContent += '<td class="cell100 column3">' + data[i].session + '</td>';
+                        htmlContent += '<td class="cell100 column8">' + data[i].status + '</td>';
+                        htmlContent += '<td class="cell100 column8">';
+                        htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                        htmlContent += '<button class="delete"><i class="fa fa-trash"></i> Trash</button>';
+                        htmlContent += '</td>';
+                        htmlContent += '</tr>';
+                    }
+                    $('.tb-content').html(htmlContent);
+                },
+                error: function (r, exception) {
+                    alert('Not okie');
+                    console.log(r);
+                }
+            });
+        });
     </script>
 </section>

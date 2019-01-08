@@ -73,3 +73,36 @@
     | Your Page Content Here |
     -------------------------->
 </section>
+<section class="content container-fluid"></section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $("#btnSave").click(function () {
+        var token = localStorage.getItem('token-key');
+        var data = {
+            "firstName": $('input[name="firstName"]').val(),
+            "lastName": $('input[name="lastName"]').val(),
+            "birthday": $('input[name="birthday"]').val(),
+            "gender": $('select[name="gender"]').val(),
+            "phone": $('input[name="phone"]').val()
+        }
+        $.ajax({
+            method: 'POST',
+            url: 'https://eap-asm.azurewebsites.net/api/GeneralInformations/STU',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                alert("You have added a new student:\nUsername: " + data.username + "\nPassword: " + data.password);
+                window.location.href = "/Manager/ListStudent"
+            },
+            error: function (jqXHR, exception) {
+                console.log('An error happened. Please try again later.');
+                console.log(jqXHR);
+            }
+        });
+    });
+</script>

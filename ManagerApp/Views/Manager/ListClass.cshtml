@@ -94,6 +94,7 @@
                 success: function (data, textStatus, jqXHR) {
                     alert('ok');
                     var htmlContent = '';
+                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         htmlContent += '<tr class="row100 body">'
                         htmlContent += '<td class="id">' + data[i].id + '</td>';

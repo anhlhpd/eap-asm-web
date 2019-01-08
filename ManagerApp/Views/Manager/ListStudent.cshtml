@@ -11,7 +11,7 @@
     <div class="limiter">
         <div class="container-table150">
             <div class="wrap-table100">
-                <h2 class="form-title">List Student</h2>
+                <h2 class="form-title" style="text-transform:uppercase;padding-left:20px; padding-top:10px">List Student</h2>
                 <form action="#" method="get" class="sidebar-form" id="mysearch">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -24,7 +24,7 @@
                 </form>
                 <div class="table100 ver1">
                     <div class="#">
-                        <table>
+                        <table style="background-color:white;">
                             <thead>
                                 <tr class="row100 head">
                                     <th class="" style="padding: 20px;">ID</th>
@@ -37,66 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody class="tb-content">
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
-                                <tr class="row100 body">
-                                    <td class="">Brandon Green</td>
-                                    <td class="cell100 column2">CMO</td>
-                                    <td class="cell100 column3">16 Nov 2012</td>
-                                    <td class="cell100 column4">16 Nov 2017</td>
-                                    <td class="cell100 column5">brandon94@example.com</td>
-                                    <td class="cell100 column6">30</td>
-                                    <td class="cell100 column8">
-                                        <button><i class="fa fas fa-edit"></i> Edit</button>&emsp;
-                                        <button><i class="fa fa-trash"></i> Trash</button>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -115,21 +56,23 @@
             url: 'https://eap-asm.azurewebsites.net/api/Accounts',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'o6asEHZz1kgr7hIjhYcHSLm46rMrzdw3'
+                'Authorization': 'Basic ' + 'pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA'
             },
             success: function (data, textStatus, jqXHR) {
                 var htmlContent = '';
                 for (var i = 0; i < data.length; i++) {
-                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="id">' + data[i].id + '</td>';
                     htmlContent += '<td class="cell100 column4">' + data[i].username + '</td>';
-                    htmlContent += '<td class="cell100 column2">' + data[i].generalInfomation.firstname + '</td>';
-                    htmlContent += '<td class="cell100 column3">' + data[i].generalInfomation.lastname + '</td>';
-                    htmlContent += '<td class="cell100 column5">' + data[i].generalInfomation.gender + '</td>';
-                    htmlContent += '<td class="cell100 column6">' + data[i].generalInfomation.class + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].generalInformation.firstName + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.lastName + '</td>';
+                    htmlContent += '<td class="cell100 column5">' + data[i].generalInformation.gender + '</td>';
+                    htmlContent += '<td class="cell100 column6">' + data[i].generalInformation.class + '</td>';
                     htmlContent += '<td class="cell100 column8">';
                     htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
-                    htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
+                    htmlContent += '<button class="delete"><i class="fa fa-trash"></i> Trash</button>';
                     htmlContent += '</td>'
+                    htmlContent += '</tr>';
                 }
                 $('.tb-content').html(htmlContent);
             },
@@ -138,7 +81,43 @@
             }
         });
     });
-    
+    $(document).on('click', '.delete', function () {
+
+        var id = $(this).closest('tr').children('td.id').text();
+        console.log(id);
+        $.ajax({
+            method: 'DELETE',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + 'pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA'
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 body">'
+                    htmlContent += '<td class="">' + data[i].id + '</td>';
+                    htmlContent += '<td class="cell100 column2">' + data[i].username + '</td>';
+                    htmlContent += '<td class="cell100 column3">' + data[i].generalInformation.firstName + '</td>';
+                    htmlContent += '<td class="cell100 column4">' + data[i].generalInformation.lastName + '</td>';
+                    htmlContent += '<td class="cell100 column5">' + data[i].generalInformation.gender + '</td>';
+                    htmlContent += '<td class="cell100 column6">' + data[i].generalInformation.birthday + '</td>';
+                    htmlContent += '<td class="cell100 column7">' + data[i].email + '</td>';
+                    htmlContent += '<td class="cell100 column8">';
+                    htmlContent += '<a href="/Admin/EditAccount/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
+                    htmlContent += '<button><i class="fa fa-trash delete"></i> Trash</button>';
+                    htmlContent += '</td>';
+                    htmlContent += '</tr>';
+                }
+                $('.tb-content').html(htmlContent);
+            },
+            error: function (r, exception) {
+                alert('Not okie');
+                console.log(r);
+            }
+        });
+    });
 </script>
 
 </section>

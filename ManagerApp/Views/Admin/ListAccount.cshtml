@@ -34,6 +34,7 @@
                                     <th class="cell100 column5">Gender</th>
                                     <th class="cell100 column6">Birthday</th>
                                     <th class="cell100 column7">Email</th>
+                                    <th class="cell100 column7">Status</th>
                                     <th class="cell100 column8">Action</th>
                                 </tr>
                             </thead>
@@ -70,9 +71,10 @@
                 htmlContent += '<td class="cell100 column5">' + data[i].generalInformation.gender + '</td>';
                 htmlContent += '<td class="cell100 column6">' + data[i].generalInformation.birthday + '</td>';
                 htmlContent += '<td class="cell100 column7">' + data[i].email + '</td>';
+                htmlContent += '<td class="cell100 column7">' + data[i].status + '</td>';
                 htmlContent += '<td class="cell100 column8">';
                 htmlContent += '<a href="/Admin/EditAccount/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
-                htmlContent += '<button><i class="fa fa-trash delete"></i> Trash</button>';
+                htmlContent += '<button class="delete"><i class="fa fa-trash "></i> Trash</button>';
                 htmlContent += '</td>';
                 htmlContent += '</tr>';
             }
@@ -84,18 +86,19 @@
         }
     });
     $(document).on('click', '.delete' , function() {
-        alert(1);
-        var id = this.closest('tr td.id').text();
+        
+        var id = $(this).closest('tr').children('td.id').text();
         console.log(id);
-        /*$.ajax({
+        $.ajax({
             method: 'DELETE',
-            url: 'https://eap-asm.azurewebsites.net/api/Accounts' + id,
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'WhCMvXxz1kjxIS4bjZLTYkqorOW64Z'
+                'Authorization': 'Basic ' + 'pvAr1q5z1kj5G2Fr9rnxTYGOJEvbdZIA'
             },
             success: function (data, textStatus, jqXHR) {
                 var htmlContent = '';
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     htmlContent += '<tr class="row100 body">'
                     htmlContent += '<td class="">' + data[i].id+ '</td>';
@@ -117,6 +120,6 @@
                 alert('Not okie');
                 console.log(r);
             }
-        });*/
+        });
     });
 </script>

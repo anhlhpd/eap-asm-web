@@ -1,56 +1,185 @@
-﻿@RenderBody()
-@{
-    ViewData["Title"] = "View";
+﻿@{
+    ViewData["Title"] = "Add Mark";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
-    <div class="container">
-        <h1>Edit Subject</h1>
-        <hr>
-        <div class="row">
-            <div class="col-md-9 personal-info">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Mark Type:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="ASM">
+    <div id="currentSubjectId"></div>
+    <div class="limiter">   
+        <div class="container-table150">
+            <div class="wrap-table100">
+                <div class="table100 ver1">
+                    <div class="table100-firstcol">
+                    </div>
+
+                    <div class="wrap-table100-nextcols js-pscroll">
+                        <div class="table100-nextcols">
+                            <table>
+                                <thead>
+                                    <tr class="row100 head">
+                                        <th style="padding: 20px;">ID</th>
+                                        <th class="cell100 column2">Username</th>
+                                        <th class="cell100 column3">Last Name</th>
+                                        <th class="cell100 column4">First Name</th>
+                                        <th class="cell100 column5">Gender</th>
+                                        <th class="cell100 column6">Theory</th>
+                                        <th class="cell100 column7">Practice</th>
+                                        <th class="cell100 column8">Assignment</th>
+                                        <th class="cell100 column9">Total Mark</th>
+                                        <th class="cell100 column10">Pass Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div>
+                                <input type="button" value="Submit" id="btnSubmitMarks">
+                            </div> 
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Value:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Create At:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="date" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Status:</label>
-                        <div class="col-lg-8">
-                            <div class="ui-select">
-                                <select id="status-mark" class="form-control">
-                                    <option value="0">Pass</option>
-                                    <option value="1">Fail</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-8">
-                            <input type="button" class="btn btn-primary" value="Save">
-                            <span></span>
-                            <input type="reset" class="btn btn-default" value="Cancel">
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    <hr>
 </section>
-<section class="content container-fluid"></section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+        var token = localStorage.getItem('token-key');
+        var clazzId = getParamValue("clazzId");
+        var subjectId = getParamValue("subjectId");
+        $('#currentSubjectId').html("Create Marks for " + clazzId);
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Clazz/' + clazzId + '/Students',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++) {
+                    htmlContent += '<tr class="row100 head" id="student-' + data[i].id + '">';
+                    htmlContent += '<th style="padding: 20px;">' + data[i].id+ '</th>';
+                    htmlContent += '<th class="cell100 column2">' + data[i].username + '</th>';
+                    htmlContent += '<th class="cell100 column3">' + data[i].generalInformation.firstName + '</th>';
+                    htmlContent += '<th class="cell100 column4">' + data[i].generalInformation.lastName + '</th>';            
+                    htmlContent += '<th class="cell100 column5">' + data[i].generalInformation.gender + '</th>';
+                    htmlContent += '<th class="cell100 column6"><input type="number" min="0" max="10" step="0.1" id="theory-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column7"><input type="number" min="0" max="15" step="0.1" id="practice-' + data[i].id + '" value=""></th>';
+                    htmlContent += '<th class="cell100 column8"><input type="number" min="0" max="10" step="0.1" id="assignment-' + data[i].id + '" value=""></th>';             
+                    htmlContent += '<th class="cell100 column9" id="total-'+ data[i].id +'"></th>'
+                    htmlContent += '<th class="cell100 column10" id="status-'+ data[i].id +'"></th>';
+                    htmlContent += '</tr>'
+                }
+                $('tbody').html(htmlContent);
+                calculateMarks();
+            },
+            error: function (jqXHR, exception) {
+                alert('Not okie');
+            }
+        });
+        // Calculate total and output pass status
+        function calculateMarks() {
+            $('tr[id^="student-"]').each(function (index, value) {
+                var isPass = "Fail";
+                var theoryMark = 0;
+                var practiceMark = 0;
+                var assignmentMark = 0;
+                var totalMark = 0;
+                var theory = $(value).find("[id^=theory]");
+                theory.focusout(function () {
+                    if ($(this).val().trim().length == 0) {
+                        alert("Please input mark");
+                    }
+                });
+                var practice = $(value).find("[id^=practice]");
+                practice.focusout(function () {
+                    if ($(this).val().trim().length == 0) {
+                        alert("Please input mark");
+                    }
+                });
+                var assignment = $(value).find("[id^=assignment]");
+                assignment.focusout(function () {
+                    if ($(this).val().trim().length == 0) {
+                        alert("Please input mark");
+                    }
+                });
+                $(value).focusout(function () {
+                    if (theory.val().trim().length != 0 && practice.val().trim().length != 0 && assignment.val().trim().length != 0) {
+                        theoryMark = parseInt(theory.val());
+                        practiceMark = parseInt(practice.val());
+                        assignmentMark = parseInt(assignment.val());
+                        totalMark += theoryMark;
+                        totalMark += practiceMark;
+                        totalMark += assignmentMark;
+                        if (totalMark >= 35 * 0.4 && theoryMark >= 10 * 0.4 && practiceMark >= 15 * 0.4
+                            && assignmentMark >= 10 * 0.4) {
+                            isPass = "Pass";
+                        }
+                        $(value).find('th[id^="total"]').html(totalMark);
+                        $(value).find('th[id^="status"]').html(isPass);
+                    }
+                });
+            });
+        }
+
+        $('#btnSubmitMarks').click(function () {
+            var token = localStorage.getItem('token-key');
+            var data = [];
+            $('input[type="number"]').each(function () {
+                var markType = $(this).attr('id').split('-')[0];
+                switch (markType) {
+                    case "theory":
+                        markType = 0;
+                        break;
+                    case "practice":
+                        markType = 1;
+                        break;
+                    case "assignment":
+                        markType = 2;
+                        break;
+                    default:
+                        markType = -1;
+                        break;
+                }
+                var mark = {
+                    'AccountId': $(this).attr('id').split('-').pop(),
+                    'SubjectId': subjectId,
+                    'Value': $(this).val(),
+                    'MarkType': markType
+                };
+                data.push(mark);
+            });
+            $.ajax({
+                method: 'POST',
+                url: 'https://eap-asm.azurewebsites.net/api/Marks/Manager',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Basic ' + token
+                },
+                data: JSON.stringify(data),
+                success: function (data, textStatus, jqXHR) {
+                    alert('Added marks successfully!');
+                    window.location.href= "/Manager/DetailClass";
+                },
+                error: function (r, exception) {
+                    alert('Not okie');
+                    console.log(r);
+                }
+            });
+        });
+        function getParamValue(param) {
+            var urlParamString = location.search.split(param + "=");
+            if (urlParamString.length <= 1) return "";
+            else {
+                var tmp = urlParamString[1].split("&");
+                return tmp[0];
+            }
+        }
+    });
+    
+    
+</script>

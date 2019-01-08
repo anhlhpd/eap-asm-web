@@ -52,15 +52,13 @@
         var token = localStorage.getItem('token-key');
         $.ajax({
             method: 'GET',
-            url: 'https://eap-asm.azurewebsites.net/api/Subjects',
+            url: 'https://eap-asm.azurewebsites.net/api/Subjects/All',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': 'Basic ' + 'dQUruolz1kgKQIxwEZPuRabRX3oT5ea'
+                'Authorization': 'Basic ' + token
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(data);
                 var htmlContent = '';
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     htmlContent += '<tr class="row100 body">'
                     htmlContent += '<td class="">' + data[i].id + '</td>';
@@ -68,7 +66,7 @@
                     htmlContent += '<td class="cell100 column3">' + data[i].description + '</td>';
                     htmlContent += '<td class="cell100 column4">' + data[i].status + '</td>';
                     htmlContent += '<td class="cell100 column8">';
-                    htmlContent += '<button><i class="fa fas fa-edit"></i>Edit</button>&emsp;';
+                    htmlContent += '<a href="/Manager/EditSubject/' + data[i].id + '"><button><i class="fa fas fa-edit"></i>Edit</button></a>&emsp;';
                     htmlContent += '<button><i class="fa fa-trash"></i> Trash</button>';
                     htmlContent += '</td>';
                     htmlContent += '</tr>';
@@ -76,7 +74,7 @@
                 $('.body').html(htmlContent);
             },
             error: function (r, exception) {
-                alert('Not okie');
+                alert('There"s an error. Please try again later.');
                 console.log(r);
             }
         });

@@ -6,39 +6,39 @@
     <div class="container">
         <h1>Edit Profile</h1>
         <hr>
-        <div class="row">           
-            <div class="col-md-9 personal-info">               
+        <div class="row">
+            <div class="col-md-9 personal-info">
                 <h3>Student Information</h3>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="firstName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="lastName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Phone:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="phone">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Brithday:</label>
+                        <label class="col-lg-3 control-label">Birthday:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="date" value="">
+                            <input class="form-control" type="date" value="" name="birthday">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Gender:</label>
                         <div class="col-lg-8">
                             <div class="ui-select">
-                                <select id="gender-student" class="form-control">
+                                <select id="gender-student" class="form-control" name="gender">
                                     <option value="0">Female</option>
                                     <option value="1">Male</option>
                                     <option value="2">Other</option>
@@ -49,25 +49,20 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" value="" name="email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Password:</label>
                         <div class="col-md-8">
-                            <input class="form-control" type="password" value="">
+                            <input class="form-control" type="password" value="" name="password" placeholder="Fill in when you want to change the password">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Confirm password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="password" value="">
-                        </div>
-                    </div>
+                    <input class="hidden" name="createdAt"></input>
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input type="button" class="btn btn-primary" value="Save Changes">
+                            <input type="button" class="btn btn-primary" value="Save Changes" id="submit">
                             <span></span>
                             <input type="reset" class="btn btn-default" value="Cancel">
                         </div>
@@ -78,9 +73,108 @@
     </div>
     <hr>
 </section>
-<!-- Main content -->
-<section class="content container-fluid">
-    <!--------------------------
-    | Your Page Content Here |
-    -------------------------->
-</section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+    var token = localStorage.getItem('token-key');
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        $.ajax({
+            method: 'GET',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            contentType: 'application/json',
+            success: function (data, textStatus, jqXHR) {
+                var date = function formatDate() {
+                    var d = new Date(data.generalInformation.birthday),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    return [year, month, day].join('-');
+                }
+                $('input[name="firstName"]').val(data.generalInformation.firstName);
+                $('input[name="lastName"]').val(data.generalInformation.lastName);
+                $('input[name="email"]').val(data.email);
+                $('input[name="birthday"]').val(date);
+                $('input[name="gender"]').val(data.generalInformation.gender);
+                $('input[name="phone"]').val(data.generalInformation.phone);
+                $('input[name="createdAt"]').val(data.createdAt);
+            },
+            error: function (r, exception) {
+                alert('Not okie ' + r);
+                console.log(exception);
+            }
+        });
+    });
+
+    $('#submit').click(function () {
+        var token = localStorage.getItem('token-key');
+        var id = window.location.href.substr(location.href.lastIndexOf('/') + 1);
+        var data;
+        if ($('input[name="password"]').val() == "") {
+            data = {
+                "id": id,
+                "email": $('input[name="email"]').val(),
+                "createdAt": $('input[name="createdAt"]').val(),
+                "updatedAt": new Date(),
+                "generalInformation": {
+                    "accountId": id,
+                    "firstName": $('input[name="firstName"]').val(),
+                    "lastName": $('input[name="lastName"]').val(),
+                    "birthday": $('input[name="birthday"]').val(),
+                    "phone": $('input[name="phone"]').val(),
+                    "gender": $('input[name="gender"]').val()
+                }
+            }
+        }
+        else data = {
+            "id": id,
+            "email": $('input[name="email"]').val(),
+            "createdAt": $('input[name="createdAt"]').val(),
+            "updatedAt": new Date(),
+            "generalInformation": {
+                "accountId": id,
+                "firstName": $('input[name="firstName"]').val(),
+                "lastName": $('input[name="lastName"]').val(),
+                "birthday": $('input[name="birthday"]').val(),
+                "phone": $('input[name="phone"]').val(),
+                "gender": $('input[name="gender"]').val()
+            },
+            "password": $('input[name="password"]').val()
+        };
+        console.log(JSON.stringify(data));
+        $.ajax({
+            method: 'PUT',
+            url: 'https://eap-asm.azurewebsites.net/api/Accounts/' + id,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token,
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Origin': true
+            },
+            crossDomain: true,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data, textStatus, jqXHR) {
+                alert('sucess');
+                $('.form-group').submit();
+                window.location.href= "/Manager/ListStudent";
+            },
+            error: function (r, exception) {
+                console.log('nooooo');
+                console.log(r);
+            }
+        });
+    });
+</script>
+

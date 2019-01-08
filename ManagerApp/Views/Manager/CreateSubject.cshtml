@@ -8,42 +8,30 @@
         <hr>
         <div class="row">
             <div class="col-md-9 personal-info">
-               
+
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Subject ID:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="C01">
+                            <input class="form-control" type="text" name="id">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Subject name:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="T1708E">
+                            <input class="form-control" type="text" name="name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Description:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" value="">
+                            <input class="form-control" type="text" name="description">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Start Date:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="date" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">End Date:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="date" value="1">
-                        </div>
-                    </div>
+                    </div>                  
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input type="button" class="btn btn-primary" value="Save">
+                            <input type="button" id="btnSave" class="btn btn-primary" value="Save">
                             <span></span>
                             <input type="reset" class="btn btn-default" value="Reset">
                         </div>
@@ -55,3 +43,36 @@
     <hr>
 </section>
 <section class="content container-fluid"></section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    $("#btnSave").click(function () {
+    var token = localStorage.getItem('token-key');
+        var data = {
+            "id": $('input[name="id"]').val(),
+            "name": $('input[name="name"]').val(),
+            "description": $('input[name="description"]').val()
+        }
+        $.ajax({
+            method: 'POST',
+            url: 'https://eap-asm.azurewebsites.net/api/Subjects',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Basic ' + token
+            },
+            data: JSON.stringify(data),
+            success: function (data, textStatus, jqXHR) {
+                console.log('Subject created successfully!');
+                window.location.href = "/Manager/ListSubject";
+            },
+            error: function (jqXHR, exception) {
+                console.log('An error happened. An subject wasn`t created');
+                console.log(jqXHR);
+            }
+        });
+    });
+
+
+</script>
+

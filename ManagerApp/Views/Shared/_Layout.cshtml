@@ -40,10 +40,12 @@
         .limiter {
             background-color: #bee6fe;
         }
+
         #mysearch {
             width: 300px;
             float: right;
         }
+
         th, tr, td {
             text-align: center;
         }
@@ -55,8 +57,9 @@
         body {
             padding: 0;
         }
-        #mycss{
-            border:hidden;
+
+        #mycss {
+            border: hidden;
         }
     </style>
 </head>
@@ -69,7 +72,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>AP</b>T</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>AdminPanel</b>Tutorial</span>
+                <span class="logo-lg"><b>FPT Aptech</b></span>
             </a>
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -201,6 +204,8 @@
                 alert("You're not logged in!");
                 window.location.href = "../Home/Login";
             }
+            $(".adm").addClass("hidden");
+            $(".mng").addClass("hidden");
         }
         else {
             if (!isLoginPage) {
